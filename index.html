@@ -7,14 +7,14 @@
 
 <title>IP Viewer</title>
 
-<script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 
 <style>
 
 body{
 margin:0;
 background:#000;
-font-family:Arial;
+font-family:Arial, sans-serif;
 color:white;
 height:100vh;
 display:flex;
@@ -27,6 +27,8 @@ overflow:hidden;
 position:fixed;
 width:100%;
 height:100%;
+top:0;
+left:0;
 z-index:0;
 }
 
@@ -51,28 +53,24 @@ letter-spacing:3px;
 }
 
 .ip{
-font-size:48px;
+font-size:42px;
 margin:15px 0;
-word-break:break-all;
 }
 
 button{
-padding:12px 30px;
+padding:12px 25px;
 border:1px solid #7c3aed;
 background:transparent;
 color:#c084fc;
 border-radius:6px;
 cursor:pointer;
-transition:0.3s;
-margin:6px;
+margin:5px;
 }
 
 button:hover{
 background:#7c3aed;
 color:white;
 }
-
-/* botão certificado */
 
 .cert{
 border-color:#22c55e;
@@ -84,16 +82,14 @@ background:#22c55e;
 color:black;
 }
 
-/* MOBILE */
-
 @media (max-width:600px){
 
 .ip{
-font-size:32px;
+font-size:28px;
 }
 
 button{
-width:80%;
+width:90%;
 }
 
 }
@@ -118,7 +114,7 @@ width:80%;
 
 <br>
 
-<a href="certificado.pem">
+<a href="certificado.pem" download>
 <button class="cert">INSTALAR CERTIFICADO</button>
 </a>
 
@@ -126,25 +122,17 @@ width:80%;
 
 <script>
 
-let ipAtual=""
+let ipAtual="";
 
-async function pegarIP(){
-
-try{
-
-const res = await fetch("https://api.ipify.org?format=json")
-const data = await res.json()
-
-ipAtual = data.ip
-document.getElementById("ip").innerText = ipAtual
-
-}catch{
-
-document.getElementById("ip").innerText = "Erro ao carregar IP"
-
-}
-
-}
+fetch("https://api.ipify.org?format=json")
+.then(res=>res.json())
+.then(data=>{
+ipAtual=data.ip
+document.getElementById("ip").innerText=data.ip
+})
+.catch(()=>{
+document.getElementById("ip").innerText="Erro ao carregar IP"
+})
 
 function copiarIP(){
 
@@ -153,10 +141,7 @@ alert("IP copiado!")
 
 }
 
-pegarIP()
-
 particlesJS("particles-js",{
-
 particles:{
 number:{value:70},
 color:{value:"#6d28d9"},
@@ -175,8 +160,7 @@ enable:true,
 speed:1.5
 }
 }
-
-})
+});
 
 </script>
 
