@@ -3,7 +3,9 @@
 <head>
 
 <meta charset="UTF-8">
-<title>Proxy Installer</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>IP Viewer</title>
 
 <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
 
@@ -11,8 +13,8 @@
 
 body{
 margin:0;
-font-family:Arial;
 background:#000;
+font-family:Arial;
 color:white;
 height:100vh;
 display:flex;
@@ -28,58 +30,69 @@ height:100%;
 z-index:0;
 }
 
-.panel{
+.container{
 
 position:relative;
 z-index:2;
-
-background:#0f172a;
-padding:40px;
-border-radius:12px;
-width:340px;
 text-align:center;
-box-shadow:0 0 25px rgba(0,0,0,0.8);
 
 }
 
-h1{
-margin-bottom:25px;
+.discord{
+
+color:#3b82f6;
+font-size:14px;
+letter-spacing:2px;
+margin-bottom:20px;
+
+}
+
+.label{
+
+color:#888;
+font-size:12px;
+letter-spacing:3px;
+
+}
+
+.ip{
+
+font-size:48px;
+margin:15px 0;
+
 }
 
 button{
 
-width:100%;
-padding:14px;
-margin-top:12px;
-border:none;
-border-radius:8px;
-font-size:16px;
+padding:12px 30px;
+border:1px solid #7c3aed;
+background:transparent;
+color:#c084fc;
+border-radius:6px;
 cursor:pointer;
+transition:0.3s;
 
 }
 
-.install{
-background:#22c55e;
+button:hover{
+
+background:#7c3aed;
 color:white;
+
 }
 
-.install:hover{
-background:#16a34a;
-}
+/* MOBILE */
+
+@media (max-width:600px){
 
 .ip{
-background:#3b82f6;
-color:white;
+font-size:32px;
 }
 
-.ip:hover{
-background:#2563eb;
+button{
+width:70%;
 }
 
-#resultado{
-margin-top:20px;
-font-size:18px;
-color:#38bdf8;
 }
 
 </style>
@@ -90,57 +103,59 @@ color:#38bdf8;
 
 <div id="particles-js"></div>
 
-<div class="panel">
+<div class="container">
 
-<h1>Proxy Installer</h1>
+<div class="discord">DISCORD.GG/ZEEK</div>
 
-<a href="certificado.pem">
-<button class="install">Instalar Certificado</button>
-</a>
+<div class="label">SEU IPV4</div>
 
-<button class="ip" onclick="verIP()">Mostrar meu IP</button>
+<div class="ip" id="ip">Carregando...</div>
 
-<div id="resultado"></div>
+<button onclick="copiarIP()">COPIAR</button>
 
 </div>
 
 <script>
 
-function verIP(){
+let ipAtual="";
 
 fetch("https://api.ipify.org?format=json")
-.then(res => res.json())
-.then(data => {
+.then(res=>res.json())
+.then(data=>{
 
-document.getElementById("resultado").innerHTML =
-"Seu IP: " + data.ip
+ipAtual=data.ip
+document.getElementById("ip").innerText=data.ip
 
 })
+
+function copiarIP(){
+
+navigator.clipboard.writeText(ipAtual)
 
 }
 
 particlesJS("particles-js",{
 
 particles:{
-number:{value:80},
-color:{value:"#ffffff"},
+number:{value:70},
+color:{value:"#6d28d9"},
 shape:{type:"circle"},
-opacity:{value:0.5},
+opacity:{value:0.3},
 size:{value:3},
 line_linked:{
 enable:true,
-distance:150,
-color:"#ffffff",
+distance:140,
+color:"#6d28d9",
 opacity:0.2,
 width:1
 },
 move:{
 enable:true,
-speed:2
+speed:1.5
 }
 }
 
-});
+})
 
 </script>
 
